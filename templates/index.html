@@ -2,7 +2,7 @@
  * @Author: LetMeFly
  * @Date: 2024-01-30 21:29:59
  * @LastEditors: LetMeFly
- * @LastEditTime: 2024-01-30 21:41:46
+ * @LastEditTime: 2024-01-30 21:55:30
 -->
 <!DOCTYPE html>
 <html>
@@ -10,21 +10,43 @@
     <title>键盘按键模拟</title>
 </head>
 <body>
-    <h1>按下 "暂停/播放" 按钮以模拟键盘按键</h1>
-    <button id="pauseButton">暂停/播放 (Ctrl+Alt+F5)</button>
+    <h1>模拟多个键盘按键</h1>
+    <div id="buttonsContainer"></div>
     <div id="resultMessage"></div>
 
     <script>
-        document.getElementById("pauseButton").addEventListener("click", function() {
+        const keyButtons = [
+            { text: "暂停/播放", keyCombination: "Ctrl+Alt+F5" },
+            { text: "下一首", keyCombination: "Ctrl+Alt+→" },
+            { text: "上一首", keyCombination: "Ctrl+Alt+←" },
+            { text: "增加音量", keyCombination: "Ctrl+Alt+↑" },
+            { text: "减少音量", keyCombination: "Ctrl+Alt+↓" }
+        ];
+
+        function sendKeyPress(keyCombination) {
             // 发送POST请求到后端
             fetch("/simulate_keypress", {
-                method: "POST"
+                method: "POST",
+                body: JSON.stringify({ key: keyCombination }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
             .then(response => response.text())
             .then(data => {
                 // 显示后端返回的消息
                 document.getElementById("resultMessage").textContent = data;
             });
+        }
+
+        const buttonsContainer = document.getElementById("buttonsContainer");
+
+        // 生成按钮
+        keyButtons.forEach(button => {
+            const buttonElement = document.createElement("button");
+            buttonElement.textContent = `${button.text} (${button.keyCombination})`;
+            buttonElement.onclick = () => sendKeyPress(button.keyCombination);
+            buttonsContainer.appendChild(buttonElement);
         });
     </script>
 </body>
