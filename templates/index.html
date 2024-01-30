@@ -2,7 +2,7 @@
  * @Author: LetMeFly
  * @Date: 2024-01-30 21:29:59
  * @LastEditors: LetMeFly
- * @LastEditTime: 2024-01-30 22:49:52
+ * @LastEditTime: 2024-01-30 22:53:20
 -->
 <!DOCTYPE html>
 <html>
@@ -23,7 +23,8 @@
 
         .container {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column; /* 修改为垂直布局 */
+            align-items: center; /* 水平居中 */
             margin: 20px;
             padding: 20px;
             background-color: #ffffff;
@@ -34,24 +35,25 @@
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             grid-gap: 10px;
-            max-width: 100%;
-            overflow-x: auto;
+            /* max-width: 100%; */
+            /* overflow-x: auto; */
             white-space: nowrap;
         }
 
         .keyButton {
-            width: 50px;
+            width: auto; /* 调整按钮宽度 */
+            min-width: 50px; /* 设置按钮的最小宽度 */
             height: 50px;
             text-align: center;
             line-height: 50px;
-            border: 2px solid #007bff; /* 添加边框 */
+            border: 2px solid #007bff;
             background-color: #fff;
             color: #007bff;
             font-weight: bold;
             font-size: 16px;
             cursor: pointer;
-            border-radius: 5px; /* 圆角按钮 */
-            transition: background-color 0.3s, color 0.3s; /* 添加过渡效果 */
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .keyButton:hover {
@@ -70,6 +72,7 @@
             color: #fff;
             border: none;
             cursor: pointer;
+            margin-top: 10px;
         }
 
         #resultMessage {
@@ -77,24 +80,12 @@
             font-weight: bold;
         }
 
-        @media screen and (max-width: 600px) {
-            .keyButton {
-                width: 40px;
-                height: 40px;
-                font-size: 14px;
-                margin: 5px;
-            }
-            .keyboard-container {
-                grid-gap: 5px;
-            }
-        }
-
         /* 创建气泡通知的样式 */
         .notification {
             position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 50%; /* 垂直居中 */
+            left: 50%; /* 水平居中 */
+            transform: translate(-50%, -50%); /* 居中 */
             background-color: rgba(0, 0, 0, 0.8);
             color: #fff;
             padding: 10px 20px;
@@ -112,6 +103,18 @@
         .fade-out {
             opacity: 0;
         }
+
+        @media screen and (max-width: 600px) {
+            .keyButton {
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+                margin: 5px;
+            }
+            .keyboard-container {
+                grid-gap: 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -123,11 +126,11 @@
         <div>
             <h2>组合键</h2>
             <div id="keyboardContainer" class="keyboard-container"></div>
-            <!-- 添加更多常用按键按钮 -->
-            <button id="sendButton">发送</button>
         </div>
+        <!-- 添加更多常用按键按钮 -->
+        <button id="sendButton">发送</button>
     </div>
-    <div id="resultMessage"></div>
+    <div id="resultMessage" class="notification"></div>
 
     <script>
         const keyButtons = [
@@ -177,7 +180,6 @@
             .then(response => response.text())
             .then(data => {
                 // 显示后端返回的消息
-                // document.getElementById("resultMessage").textContent = data;
                 showNotification(data);
             });
         }
@@ -211,10 +213,10 @@
             const index = pressedKeys.indexOf(key);
             if (index === -1) {
                 pressedKeys.push(key);
-                document.querySelector(`[data-key="${key}"]`).style.backgroundColor = 'lightgreen'; // 可视化按键
+                document.querySelector(`[data-key="${key}"]`).classList.add("selected"); // 添加选中样式
             } else {
                 pressedKeys.splice(index, 1);
-                document.querySelector(`[data-key="${key}"]`).style.backgroundColor = ''; // 取消可视化
+                document.querySelector(`[data-key="${key}"]`).classList.remove("selected"); // 移除选中样式
             }
         }
 
@@ -230,29 +232,28 @@
             })
             .then(response => response.text())
             .then(data => {
-                // document.getElementById("resultMessage").textContent = data; // 显示后端返回的消息
                 showNotification(data);
             });
-            // 重置按键序列和按钮样式
+            // 重置按键序列
             pressedKeys.length = 0;
             document.querySelectorAll('.keyButton').forEach(button => {
-                button.style.backgroundColor = '';
+                button.classList.remove("selected"); // 移除选中样式
             });
         });
 
         function showNotification(message) {
-            const notification = document.createElement("div");
-            notification.className = "notification";
+            const notification = document.getElementById("resultMessage");
             notification.textContent = message;
-            document.body.appendChild(notification);
+            notification.classList.add("notification", "fade-in");
 
-            // // 自动隐藏通知
-            // setTimeout(() => {
-            //     notification.classList.add("fade-out");
-            //     setTimeout(() => {
-            //         document.body.removeChild(notification);
-            //     }, 300); // 300毫秒后从DOM中移除通知
-            // }, 2000); // 2秒后开始隐藏通知
+            // 自动隐藏通知
+            setTimeout(() => {
+                notification.classList.remove("fade-in");
+                notification.classList.add("fade-out");
+                setTimeout(() => {
+                    notification.classList.remove("fade-out");
+                }, 300); // 300毫秒后从DOM中移除通知
+            }, 2000); // 2秒后开始隐藏通知
         }
     </script>
 </body>
