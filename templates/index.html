@@ -2,7 +2,7 @@
  * @Author: LetMeFly
  * @Date: 2024-01-30 21:29:59
  * @LastEditors: LetMeFly
- * @LastEditTime: 2024-01-30 21:29:59
+ * @LastEditTime: 2024-01-30 21:41:46
 -->
 <!DOCTYPE html>
 <html>
@@ -10,9 +10,22 @@
     <title>键盘按键模拟</title>
 </head>
 <body>
-    <h1>按下 "暂停" 按钮以模拟键盘按键</h1>
-    <form method="POST" action="/simulate_keypress">
-        <button type="submit">暂停</button>
-    </form>
+    <h1>按下 "暂停/播放" 按钮以模拟键盘按键</h1>
+    <button id="pauseButton">暂停/播放 (Ctrl+Alt+F5)</button>
+    <div id="resultMessage"></div>
+
+    <script>
+        document.getElementById("pauseButton").addEventListener("click", function() {
+            // 发送POST请求到后端
+            fetch("/simulate_keypress", {
+                method: "POST"
+            })
+            .then(response => response.text())
+            .then(data => {
+                // 显示后端返回的消息
+                document.getElementById("resultMessage").textContent = data;
+            });
+        });
+    </script>
 </body>
 </html>
