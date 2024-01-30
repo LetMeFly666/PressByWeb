@@ -2,9 +2,9 @@
  * @Author: LetMeFly
  * @Date: 2024-01-30 21:02:09
  * @LastEditors: LetMeFly
- * @LastEditTime: 2024-01-30 21:07:05
+ * @LastEditTime: 2024-01-30 22:29:23
 -->
-# PressByWeb
+# PressByWeb(Remote Keyboard)
 
 通过网页在电脑上按下快捷键。
 

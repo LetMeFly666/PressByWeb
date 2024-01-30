@@ -2,7 +2,7 @@
 Author: LetMeFly
 Date: 2024-01-30 21:07:22
 LastEditors: LetMeFly
-LastEditTime: 2024-01-30 21:56:13
+LastEditTime: 2024-01-30 22:28:00
 '''
 from flask import Flask, request, render_template
 import pyautogui
@@ -28,9 +28,15 @@ def simulate_keypress():
     if key_combination in keyboard_mapping:
         key_sequence = keyboard_mapping[key_combination]
         pyautogui.hotkey(*key_sequence)  # 解包键序列
-        return '按键成功'
+        return '快捷键按键成功'
     else:
         return '未知的键盘组合'
+
+@app.route('/simulate_keysequence', methods=['POST'])
+def simulate_keysequence():
+    keys = request.json.get('keys')
+    pyautogui.hotkey(*keys)  # 解包键序列
+    return '按键序列成功模拟'
 
 if __name__ == '__main__':
     app.run(debug=True)

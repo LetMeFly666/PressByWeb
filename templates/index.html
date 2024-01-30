@@ -2,25 +2,167 @@
  * @Author: LetMeFly
  * @Date: 2024-01-30 21:29:59
  * @LastEditors: LetMeFly
- * @LastEditTime: 2024-01-30 21:55:30
+ * @LastEditTime: 2024-01-30 22:49:52
 -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>键盘按键模拟</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .keyboard-container {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-gap: 10px;
+            max-width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .keyButton {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            border: 2px solid #007bff; /* 添加边框 */
+            background-color: #fff;
+            color: #007bff;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px; /* 圆角按钮 */
+            transition: background-color 0.3s, color 0.3s; /* 添加过渡效果 */
+        }
+
+        .keyButton:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .keyButton.selected {
+            background-color: lightgreen;
+        }
+
+        #sendButton {
+            width: 100px;
+            height: 40px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #resultMessage {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        @media screen and (max-width: 600px) {
+            .keyButton {
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+                margin: 5px;
+            }
+            .keyboard-container {
+                grid-gap: 5px;
+            }
+        }
+
+        /* 创建气泡通知的样式 */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+
+        /* 动画显示和隐藏气泡通知 */
+        .fade-in {
+            opacity: 1;
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+    </style>
 </head>
 <body>
-    <h1>模拟多个键盘按键</h1>
-    <div id="buttonsContainer"></div>
+    <div class="container">
+        <div>
+            <h2>快捷键</h2>
+            <div id="buttonsContainer"></div>
+        </div>
+        <div>
+            <h2>组合键</h2>
+            <div id="keyboardContainer" class="keyboard-container"></div>
+            <!-- 添加更多常用按键按钮 -->
+            <button id="sendButton">发送</button>
+        </div>
+    </div>
     <div id="resultMessage"></div>
 
     <script>
         const keyButtons = [
             { text: "暂停/播放", keyCombination: "Ctrl+Alt+F5" },
-            { text: "下一首", keyCombination: "Ctrl+Alt+→" },
             { text: "上一首", keyCombination: "Ctrl+Alt+←" },
+            { text: "下一首", keyCombination: "Ctrl+Alt+→" },
             { text: "增加音量", keyCombination: "Ctrl+Alt+↑" },
             { text: "减少音量", keyCombination: "Ctrl+Alt+↓" }
+        ];
+
+        const additionalKeys = [
+            { text: "Ctrl", key: "ctrl" },
+            { text: "Win", key: "win" },
+            { text: "Alt", key: "alt" },
+            { text: "Esc", key: "esc" },
+            { text: "Fn", key: "fn" },
+            { text: "F1", key: "f1" },
+            { text: "F2", key: "f2" },
+            { text: "F3", key: "f3" },
+            { text: "F4", key: "f4" },
+            { text: "F5", key: "f5" },
+            { text: "F6", key: "f6" },
+            { text: "F7", key: "f7" },
+            { text: "F8", key: "f8" },
+            { text: "F9", key: "f9" },
+            { text: "F10", key: "f10" },
+            { text: "F11", key: "f11" },
+            { text: "F12", key: "f12" },
+            { text: "↑", key: "up" },
+            { text: "↓", key: "down" },
+            { text: "←", key: "left" },
+            { text: "→", key: "right" },
+            { text: "Tab", key: "tab" },
+            { text: "Shift", key: "shift" },
+            { text: "Enter", key: "enter" }
         ];
 
         function sendKeyPress(keyCombination) {
@@ -35,19 +177,83 @@
             .then(response => response.text())
             .then(data => {
                 // 显示后端返回的消息
-                document.getElementById("resultMessage").textContent = data;
+                // document.getElementById("resultMessage").textContent = data;
+                showNotification(data);
             });
         }
 
         const buttonsContainer = document.getElementById("buttonsContainer");
+        const keyboardContainer = document.getElementById("keyboardContainer");
 
-        // 生成按钮
+        // 生成快捷键按钮
         keyButtons.forEach(button => {
             const buttonElement = document.createElement("button");
             buttonElement.textContent = `${button.text} (${button.keyCombination})`;
+            buttonElement.classList.add("keyButton");
             buttonElement.onclick = () => sendKeyPress(button.keyCombination);
             buttonsContainer.appendChild(buttonElement);
         });
+
+        // 生成组合键按钮和键盘模拟
+        additionalKeys.forEach(key => {
+            const buttonElement = document.createElement("button");
+            buttonElement.textContent = key.text;
+            buttonElement.setAttribute('data-key', key.key);
+            buttonElement.classList.add("keyButton");
+            buttonElement.onclick = () => toggleKeySelection(key.key);
+            keyboardContainer.appendChild(buttonElement);
+        });
+
+        const pressedKeys = [];
+
+        // 切换按键选择
+        function toggleKeySelection(key) {
+            const index = pressedKeys.indexOf(key);
+            if (index === -1) {
+                pressedKeys.push(key);
+                document.querySelector(`[data-key="${key}"]`).style.backgroundColor = 'lightgreen'; // 可视化按键
+            } else {
+                pressedKeys.splice(index, 1);
+                document.querySelector(`[data-key="${key}"]`).style.backgroundColor = ''; // 取消可视化
+            }
+        }
+
+        // 发送按键序列到后端
+        document.getElementById("sendButton").addEventListener("click", function() {
+            // 发送选择的按键序列到后端
+            fetch("/simulate_keysequence", {
+                method: "POST",
+                body: JSON.stringify({ keys: pressedKeys }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                // document.getElementById("resultMessage").textContent = data; // 显示后端返回的消息
+                showNotification(data);
+            });
+            // 重置按键序列和按钮样式
+            pressedKeys.length = 0;
+            document.querySelectorAll('.keyButton').forEach(button => {
+                button.style.backgroundColor = '';
+            });
+        });
+
+        function showNotification(message) {
+            const notification = document.createElement("div");
+            notification.className = "notification";
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            // // 自动隐藏通知
+            // setTimeout(() => {
+            //     notification.classList.add("fade-out");
+            //     setTimeout(() => {
+            //         document.body.removeChild(notification);
+            //     }, 300); // 300毫秒后从DOM中移除通知
+            // }, 2000); // 2秒后开始隐藏通知
+        }
     </script>
 </body>
 </html>
