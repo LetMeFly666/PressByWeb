@@ -2,13 +2,15 @@
  * @Author: LetMeFly
  * @Date: 2024-01-30 21:02:09
  * @LastEditors: LetMeFly
- * @LastEditTime: 2024-01-31 18:09:46
+ * @LastEditTime: 2024-01-31 20:29:04
 -->
 # PressByWeb(Remote Keyboard)
 
 通过网页在电脑上按下快捷键。
 
-电脑在卧室放歌人在客厅吃饭，想“下一曲”又懒得动，怎么用手机**简单**地控制一下电脑呢？通过访问电脑(服务器)提供的网页来向电脑发送快捷键吧！
+> [!TIP]
+>
+> 电脑在卧室放歌人在客厅吃饭，想“下一曲”又懒得动，怎么用手机**简单**地控制一下电脑呢？通过访问电脑(服务器)提供的网页来向电脑发送快捷键吧！
 
 + 仓库地址：[Github@LetMeFly666/PressByWeb](https://github.com/LetMeFly666/PressByWeb)
 + 在线文档：[PressByWeb.LetMeFly.XYZ](https://pressbyweb.letmefly.xyz/)
