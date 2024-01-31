@@ -2,7 +2,7 @@
  * @Author: LetMeFly
  * @Date: 2024-01-30 21:29:59
  * @LastEditors: LetMeFly
- * @LastEditTime: 2024-01-31 16:36:23
+ * @LastEditTime: 2024-01-31 16:40:36
 -->
 <!DOCTYPE html>
 <html>
@@ -56,7 +56,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        .keyButton:hover {
+        .buttonInDiv1:hover {
             background-color: #007bff;
             color: #fff;
         }
@@ -230,6 +230,7 @@
             const buttonElement = document.createElement("button");
             buttonElement.textContent = `${button.text} (${button.keyCombination})`;
             buttonElement.classList.add("keyButton");
+            buttonElement.classList.add("buttonInDiv1");
             buttonElement.onclick = () => sendKeyPress(button.keyCombination);
             buttonsContainer.appendChild(buttonElement);
             // 添加触摸事件监听器
