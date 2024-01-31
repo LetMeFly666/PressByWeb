@@ -2,7 +2,7 @@
  * @Author: LetMeFly
  * @Date: 2024-01-30 21:02:09
  * @LastEditors: LetMeFly
- * @LastEditTime: 2024-01-31 20:29:04
+ * @LastEditTime: 2024-01-31 21:32:07
 -->
 # PressByWeb(Remote Keyboard)
 
@@ -41,6 +41,11 @@
 其中```快捷键```标题下的5个按钮为很多音乐软件常用的快捷键，单击一下即可将快捷键发送到后端执行。
 
 其中```组合键```标题下的24个按钮为常用的按钮，依次单击，选择好后点击“发送按钮”，即可将按键组合发送到后端执行。
+
+## Acknowledge
+
++ 感谢[ChatGPT](https://chat.openai.com/share/2271834f-3a12-4bdc-89ee-a78e2c1faa7b)的帮助（虽然到最后GPT开始瞎扯了）。
++ 感谢[@Tisfy](https://github.com/Tisfy)的[按键功能建议#1](https://github.com/LetMeFly666/PressByWeb/issues/1)
 
 ## TODO
 
