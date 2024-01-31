@@ -2,7 +2,7 @@
  * @Author: LetMeFly
  * @Date: 2024-01-30 21:29:59
  * @LastEditors: LetMeFly
- * @LastEditTime: 2024-01-31 21:22:41
+ * @LastEditTime: 2024-01-31 21:45:18
 -->
 <!DOCTYPE html>
 <html>
@@ -130,11 +130,11 @@
                 font-size: 14px;
             }
 
-            .keyButton:nth-child(1) {
+            /* .keyButton:nth-child(1) {
                 width: calc(100% - 10px);
-            }
+            } */
 
-            .keyButton:nth-child(n+2):nth-child(-n+5) {  /*第2到5个*/
+            .keyButton:nth-child(n+1):nth-child(-n+6) {  /*第1到6个*/
                 width: calc((100% - 20px) / 2);
             }
 
@@ -168,12 +168,12 @@
 
     <script>
         const keyButtons = [
-            { text: "暂停/播放", keyCombination: "Ctrl+Alt+F5" },
             { text: "上一首", keyCombination: "Ctrl+Alt+←" },
             { text: "下一首", keyCombination: "Ctrl+Alt+→" },
+            { text: "暂停/播放", keyCombination: "Ctrl+Alt+F5" },
+            { text: "静音/解除", keyCombination: "volumemute", noBrackets: true },
             { text: "音量加↑", keyCombination: "volumeup", noBrackets: true },
-            { text: "音量减↓", keyCombination: "volumedown", noBrackets: true },
-            { text: "静音/解除", keyCombination: "volumemute", noBrackets: true }
+            { text: "音量减↓", keyCombination: "volumedown", noBrackets: true }
         ];
 
         const additionalKeys = [
