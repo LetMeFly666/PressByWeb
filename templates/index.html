@@ -2,7 +2,7 @@
  * @Author: LetMeFly
  * @Date: 2024-01-30 21:29:59
  * @LastEditors: LetMeFly
- * @LastEditTime: 2024-01-31 12:11:26
+ * @LastEditTime: 2024-01-31 16:36:23
 -->
 <!DOCTYPE html>
 <html>
@@ -37,8 +37,6 @@
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             grid-gap: 10px;
-            /* max-width: 100%; */
-            /* overflow-x: auto; */
             white-space: nowrap;
         }
 
@@ -112,6 +110,14 @@
                 padding: 10px;
             }
 
+            #buttonsContainer {
+                grid-template-columns: repeat(2, 1fr);
+                width: 100%;
+                /* display: flex; */
+                align-items: center;
+                justify-content: center;
+            }
+
             .keyboard-container {
                 grid-gap: 5px;
                 grid-template-columns: repeat(4, 1fr);
@@ -123,6 +129,17 @@
                 height: 40px;
                 font-size: 12px;
                 margin: 5px;
+                /* display: flex;
+                align-items: center; */
+                justify-content: center;
+            }
+
+            .keyButton:nth-child(1) {
+                width: calc(100% - 10px);
+            }
+
+            .keyButton:nth-child(n+2):nth-child(-n+5) {  /*第2到5个*/
+                width: calc((100% - 20px) / 2);
             }
 
             #sendButton {
