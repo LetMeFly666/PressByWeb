@@ -2,7 +2,7 @@
  * @Author: LetMeFly
  * @Date: 2024-01-30 21:02:09
  * @LastEditors: LetMeFly
- * @LastEditTime: 2024-01-31 21:39:01
+ * @LastEditTime: 2024-01-31 21:50:46
 -->
 # PressByWeb(Remote Keyboard)
 
@@ -32,11 +32,11 @@
 
 在电脑端将会看到界面如下：
 
-![电脑端](https://github.com/LetMeFly666/PressByWeb/assets/56995506/1944c19c-3217-4c73-88b9-c5b34bcf2f30)
+![电脑端](https://github.com/LetMeFly666/PressByWeb/assets/56995506/a5f0b586-547c-4e3a-a84b-ff72ab908e27)
 
 在手机端将会看到界面如下：
 
-![手机端](https://github.com/LetMeFly666/PressByWeb/assets/56995506/a5f0b586-547c-4e3a-a84b-ff72ab908e27)
+![手机端](https://github.com/LetMeFly666/PressByWeb/assets/56995506/1944c19c-3217-4c73-88b9-c5b34bcf2f30)
 
 其中```快捷键```标题下的5个按钮为很多音乐软件常用的快捷键，单击一下即可将快捷键发送到后端执行。
 
