@@ -2,12 +2,13 @@
  * @Author: LetMeFly
  * @Date: 2024-01-30 21:29:59
  * @LastEditors: LetMeFly
- * @LastEditTime: 2024-01-30 22:53:20
+ * @LastEditTime: 2024-01-31 12:11:26
 -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>键盘按键模拟</title>
+    <title>PressByWeb - RemoteKeyboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,6 +20,7 @@
         h2 {
             font-size: 18px;
             margin-top: 20px;
+            text-align: center;
         }
 
         .container {
@@ -105,14 +107,33 @@
         }
 
         @media screen and (max-width: 600px) {
-            .keyButton {
-                width: 40px;
-                height: 40px;
-                font-size: 14px;
-                margin: 5px;
+            .container {
+                margin: 10px;
+                padding: 10px;
             }
+
             .keyboard-container {
                 grid-gap: 5px;
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .keyButton {
+                width: auto;
+                min-width: 50px;
+                height: 40px;
+                font-size: 12px;
+                margin: 5px;
+            }
+
+            #sendButton {
+                width: 80px;
+                height: 30px;
+                font-size: 14px;
+                margin-top: 10px;
+            }
+
+            #resultMessage.notification {
+                padding: 5px 10px;
             }
         }
     </style>
@@ -194,6 +215,15 @@
             buttonElement.classList.add("keyButton");
             buttonElement.onclick = () => sendKeyPress(button.keyCombination);
             buttonsContainer.appendChild(buttonElement);
+            // 添加触摸事件监听器
+            buttonElement.addEventListener("touchstart", () => {
+                buttonElement.style.backgroundColor = "#007bff";
+                buttonElement.style.color = "#fff";
+            });
+            buttonElement.addEventListener("touchend", () => {
+                buttonElement.style.backgroundColor = "#fff";
+                buttonElement.style.color = "#007bff";
+            });
         });
 
         // 生成组合键按钮和键盘模拟
