@@ -2,7 +2,7 @@
 Author: LetMeFly
 Date: 2024-01-30 21:07:22
 LastEditors: LetMeFly
-LastEditTime: 2024-01-31 21:26:19
+LastEditTime: 2024-02-05 17:52:09
 '''
 from flask import Flask, request, render_template
 from functools import wraps
@@ -19,9 +19,9 @@ app = Flask(__name__)
 
 # 定义键盘组合与操作的映射关系
 keyboard_mapping = {
-    "Ctrl+Alt+F5": ("ctrl", "alt", "f5"),
-    "Ctrl+Alt+→": ("ctrl", "alt", "right"),
-    "Ctrl+Alt+←": ("ctrl", "alt", "left"),
+    "prevtrack": ("prevtrack", ),
+    "nexttrack": ("nexttrack", ),
+    "playpause": ("playpause", ),
     "volumeup": ("volumeup", ),  # 括号里的逗号必须要写，否则将被识别为字符串而不是元组
     "volumedown": ("volumedown", ),
     "volumemute": ("volumemute", )
