@@ -1,8 +1,8 @@
 '''
 Author: LetMeFly
 Date: 2024-01-30 21:07:22
-LastEditors: LetMeFly
-LastEditTime: 2024-02-05 17:52:09
+LastEditors: LetMeFly.xyz
+LastEditTime: 2025-12-27 13:58:43
 '''
 from flask import Flask, request, render_template
 from functools import wraps
@@ -33,7 +33,7 @@ def authChecker(func):
     def wrapper(*args, **kwargs):
         thisKey = request.cookies.get('key')
         if thisKey != PASSWORD:
-            return """<body><input id="keyInput" type="text" placeholder="Enter key value" onkeydown="if(event.keyCode === 13) { document.cookie = 'key=' + this.value + ';path=/;expires=' + new Date(new Date().getTime() + 86400000 * 365 * 20).toUTCString(); location.reload(); }" value=""><button onclick="document.cookie = 'key=' + document.getElementById('keyInput').value + ';path=/;expires=' + new Date(new Date().getTime() + 86400000 * 365 * 20).toUTCString(); location.reload();">设置 Cookie 并刷新</button><script>document.getElementById('keyInput').value = (document.cookie.match('(^|;) ?key=([^;]*)(;|$)') || [])[2] || '';</script></body>"""
+            return """<body><input id="keyInput" type="password" placeholder="Enter key value" onkeydown="if(event.keyCode === 13) { document.cookie = 'key=' + this.value + ';path=/;expires=' + new Date(new Date().getTime() + 86400000 * 365 * 20).toUTCString(); location.reload(); }" value=""><button onclick="document.cookie = 'key=' + document.getElementById('keyInput').value + ';path=/;expires=' + new Date(new Date().getTime() + 86400000 * 365 * 20).toUTCString(); location.reload();">设置 Cookie 并刷新</button><script>document.getElementById('keyInput').value = (document.cookie.match('(^|;) ?key=([^;]*)(;|$)') || [])[2] || '';</script></body>"""
         return func(*args, **kwargs)
     return wrapper
 
